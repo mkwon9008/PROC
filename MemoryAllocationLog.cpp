@@ -33,43 +33,13 @@ int FindAllocInfo(void *pPtr)
 
 	for (iCnt = 0; iCnt < 100; iCnt++)
 	{
-		if (g_stAllocInfo[iCnt].pPtr == pPtr) //반복문을 순회하면서 g_stAllocInfo의 배열에서 해당 pPtr을 찾아서 배열번호 반환.
+		if (g_stAllocInfo[iCnt].pPtr == pPtr) //find pPtr from g_stAllocInfo[ARR]
 		{
 			return iCnt;
 		}
-		return -1; //못찾으면 -1 반환.
+		return -1; //if not found then return -1
 	}
 }
-
-/*
-//메모리할당을 요청한 파일, 준 번호를 기억하고싶다.
-template <typename T>
-T *MemoryAlloc(int iCount, char *szFile, int iLine)
-{
-	T *pNew = new T[iCount];
-
-	SaveAllocInfo(pNew, sizeof(T) * iCount, szFile, iLine);
-
-	g_iTotalAllocCount += 1;
-	g_iTotalAllocSize += (sizeof(t) * iCount);
-
-	return pNew;
-}
-
-template <typename T>
-bool MemoryRelease(T *pPtr)
-{
-	int iAlocIndex = FindAllocInfo(pPtr); //g_stAllocInfo에서 pPtr과 같은 번호의 g_stAllocInfo[iCnt].pPtr을 찾아서 해당 iCnt반환.
-
-	if (iAlocIndex == -1) //if not found. 
-	{
-		return false;
-	}
-
-	memset(&g_stAllocInfo[iAlocIndex], 0, sizeof(st_ALLOC_INFO));
-	delete[] pPtr; //memory destroy.
-	return true;
-}*/
 
 bool PrintAlloc(void)
 {
