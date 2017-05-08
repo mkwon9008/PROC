@@ -29,14 +29,14 @@ T *MemoryAlloc(int iCount, char *szFile, int iLine)
 
 	g_iTotalAllocCount += 1;
 	g_iTotalAllocSize += (sizeof(T) * iCount);
-	printf("%d개를 %d 만큼 할당!\n", iCount, iCount * sizeof(T));
+	printf("[Count : %d] Allocation [Bytes : %d]\n", iCount, iCount * sizeof(T));
 	return pNew;
 }
 
 template <typename T>
 bool MemoryRelease(T *pPtr)
 {
-	int iAlocIndex = FindAllocInfo(pPtr); //g_stAllocInfo에서 pPtr과 같은 번호의 g_stAllocInfo[iCnt].pPtr을 찾아서 해당 iCnt반환.
+	int iAlocIndex = FindAllocInfo(pPtr); //find g_stAlocInfo[iCnt].pPtr and return iCnt from g_stAllocInfo.
 
 	if (iAlocIndex == -1) //if not found. 
 	{
