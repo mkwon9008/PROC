@@ -175,7 +175,7 @@ public :
 			return false;
 		}
 
-		t = head->next; //set 스타트.
+		t = head->next; 
 		while(t != tail)
 		{
 			t->prev->next = nullptr;
