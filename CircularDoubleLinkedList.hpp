@@ -6,14 +6,14 @@
 
 ///FUNCTION_INDEX////////////////////////////////////////////////////////
 /*
-	 1. void Init_D_List();
-	 2. void PrintAllNode();
-	 3. T InsertHead(T data);
-	 4. T InsertTail(T data);
-	 5. T popHead(void);
-	 6. T peek(int target);
-	 7. int getSize(void);
-	 8. bool ClearAllNode(void);
+1. void Init_D_List();
+2. void PrintAllNode();
+3. T InsertHead(T data);
+4. T InsertTail(T data);
+5. T popHead(void);
+6. T peek(int target);
+7. int getSize(void);
+8. bool ClearAllNode(void);
 */
 /////////////////////////////////////////////////////////////////////////
 
@@ -31,8 +31,8 @@ private:
 	node *head, *tail;
 	int _nodeCnt;
 
-public :
-	
+public:
+
 	CircularDoubleLinkedList(void)
 	{
 		Init_D_List();
@@ -48,9 +48,9 @@ public :
 		tail = (node*)malloc(sizeof(node));
 		head->next = tail;
 		head->prev = head;
-		tail->next = head->next; 
+		tail->next = head->next; //원형큐라서 이렇다.
 		tail->prev = head;
-		_nodeCnt = 0; 
+		_nodeCnt = 0; //언제나 Head, Tail을 제외한 수가 나옴.
 	}
 
 	void PrintAllNode(void)
@@ -74,9 +74,10 @@ public :
 		std::cout << std::endl;
 	}
 
-	
+
 	T InsertHead(T data)
 	{
+		//Circular Queue처럼 쓰려면 이 함수는 쓸일이 잘 없을꺼임. 근데 일단 만든다.
 		node* t;
 		t = (node*)malloc(sizeof(node));
 		if (!t)
@@ -98,6 +99,7 @@ public :
 
 	T InsertTail(T data)
 	{
+		//Circular Queue의 push역할을 하게 될 꺼임.
 		node* t;
 		t = (node*)malloc(sizeof(node));
 		if (!t)
@@ -149,14 +151,14 @@ public :
 		}
 
 		t = head->next;
-		while (iCnt < target)
+		while (iCnt < target) //타겟수가 n일 때 n-1 만큼 돕니다.
 		{
 			t = t->next;
 			iCnt++;
 		}
 
-		k = t->_data; 
-		return k;	
+		k = t->_data; //그리고 해당값을.
+		return k;	//리턴하죠.
 	}
 
 	int getSize(void)
@@ -175,28 +177,28 @@ public :
 			return false;
 		}
 
-		t = head->next; 
-		while(t != tail)
+		t = head->next; //set 스타트.
+		while (t != tail)
 		{
-			t->prev->next = nullptr;
-			t->prev = nullptr; 
-			k = t;		
-			t = t->next; 
+			t->prev->next = nullptr; //전 노드에서 t로 오는 노드 끊고.
+			t->prev = nullptr; //t의 prev 끊고.
+			k = t;		//더미노드가 t자리로 가고.
+			t = t->next; //t가 다음 노드로 가고.
 
-			free(k);	
-			_nodeCnt--;	
+			free(k);	//더미노드 free();
+			_nodeCnt--;	//하나 줄었으니 _nodeCnt--;
 
 			if (t == tail)
 			{
-				t->prev->next = nullptr; 
+				t->prev->next = nullptr; //전 노드에서 t로 오는 노드 끊고.
 				t->prev = nullptr;
 				t->next = nullptr;
 				head->prev = nullptr;
 				head->next = nullptr;
 
-				free(tail); 
+				free(tail); //헤드, 테일까지 다 날리고
 				free(head);
-				return true;
+				return true; //다날리기 끝.
 			}
 		}
 		return false;
