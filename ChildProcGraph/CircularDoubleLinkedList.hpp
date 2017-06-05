@@ -48,9 +48,9 @@ public:
 		tail = (node*)malloc(sizeof(node));
 		head->next = tail;
 		head->prev = head;
-		tail->next = head->next; //¿øÇüÅ¥¶ó¼­ ÀÌ·¸´Ù.
+		tail->next = head->next; //ì›í˜•íë¼ì„œ ì´ë ‡ë‹¤.
 		tail->prev = head;
-		_nodeCnt = 0; //¾ğÁ¦³ª Head, TailÀ» Á¦¿ÜÇÑ ¼ö°¡ ³ª¿È.
+		_nodeCnt = 0; //ì–¸ì œë‚˜ Head, Tailì„ ì œì™¸í•œ ìˆ˜ê°€ ë‚˜ì˜´.
 	}
 
 	void PrintAllNode(void)
@@ -77,7 +77,7 @@ public:
 
 	T InsertHead(T data)
 	{
-		//Circular QueueÃ³·³ ¾²·Á¸é ÀÌ ÇÔ¼ö´Â ¾µÀÏÀÌ Àß ¾øÀ»²¨ÀÓ. ±Ùµ¥ ÀÏ´Ü ¸¸µç´Ù.
+		//Circular Queueì²˜ëŸ¼ ì“°ë ¤ë©´ ì´ í•¨ìˆ˜ëŠ” ì“¸ì¼ì´ ì˜ ì—†ì„êº¼ì„. ê·¼ë° ì¼ë‹¨ ë§Œë“ ë‹¤.
 		node* t;
 		t = (node*)malloc(sizeof(node));
 		if (!t)
@@ -99,7 +99,7 @@ public:
 
 	T InsertTail(T data)
 	{
-		//Circular QueueÀÇ push¿ªÇÒÀ» ÇÏ°Ô µÉ ²¨ÀÓ.
+		//Circular Queueì˜ pushì—­í• ì„ í•˜ê²Œ ë  êº¼ì„.
 		node* t;
 		t = (node*)malloc(sizeof(node));
 		if (!t)
@@ -151,14 +151,14 @@ public:
 		}
 
 		t = head->next;
-		while (iCnt < target) //Å¸°Ù¼ö°¡ nÀÏ ¶§ n-1 ¸¸Å­ µ½´Ï´Ù.
+		while (iCnt < target) //íƒ€ê²Ÿìˆ˜ê°€ nì¼ ë•Œ n-1 ë§Œí¼ ë•ë‹ˆë‹¤.
 		{
 			t = t->next;
 			iCnt++;
 		}
 
-		k = t->_data; //±×¸®°í ÇØ´ç°ªÀ».
-		return k;	//¸®ÅÏÇÏÁÒ.
+		k = t->_data; //ê·¸ë¦¬ê³  í•´ë‹¹ê°’ì„.
+		return k;	//ë¦¬í„´í•˜ì£ .
 	}
 
 	int getSize(void)
@@ -177,28 +177,28 @@ public:
 			return false;
 		}
 
-		t = head->next; //set ½ºÅ¸Æ®.
+		t = head->next; //set ìŠ¤íƒ€íŠ¸.
 		while (t != tail)
 		{
-			t->prev->next = nullptr; //Àü ³ëµå¿¡¼­ t·Î ¿À´Â ³ëµå ²÷°í.
-			t->prev = nullptr; //tÀÇ prev ²÷°í.
-			k = t;		//´õ¹Ì³ëµå°¡ tÀÚ¸®·Î °¡°í.
-			t = t->next; //t°¡ ´ÙÀ½ ³ëµå·Î °¡°í.
+			t->prev->next = nullptr; //ì „ ë…¸ë“œì—ì„œ të¡œ ì˜¤ëŠ” ë…¸ë“œ ëŠê³ .
+			t->prev = nullptr; //tì˜ prev ëŠê³ .
+			k = t;		//ë”ë¯¸ë…¸ë“œê°€ tìë¦¬ë¡œ ê°€ê³ .
+			t = t->next; //tê°€ ë‹¤ìŒ ë…¸ë“œë¡œ ê°€ê³ .
 
-			free(k);	//´õ¹Ì³ëµå free();
-			_nodeCnt--;	//ÇÏ³ª ÁÙ¾úÀ¸´Ï _nodeCnt--;
+			free(k);	//ë”ë¯¸ë…¸ë“œ free();
+			_nodeCnt--;	//í•˜ë‚˜ ì¤„ì—ˆìœ¼ë‹ˆ _nodeCnt--;
 
 			if (t == tail)
 			{
-				t->prev->next = nullptr; //Àü ³ëµå¿¡¼­ t·Î ¿À´Â ³ëµå ²÷°í.
+				t->prev->next = nullptr; //ì „ ë…¸ë“œì—ì„œ të¡œ ì˜¤ëŠ” ë…¸ë“œ ëŠê³ .
 				t->prev = nullptr;
 				t->next = nullptr;
 				head->prev = nullptr;
 				head->next = nullptr;
 
-				free(tail); //Çìµå, Å×ÀÏ±îÁö ´Ù ³¯¸®°í
+				free(tail); //í—¤ë“œ, í…Œì¼ê¹Œì§€ ë‹¤ ë‚ ë¦¬ê³ 
 				free(head);
-				return true; //´Ù³¯¸®±â ³¡.
+				return true; //ë‹¤ë‚ ë¦¬ê¸° ë.
 			}
 		}
 		return false;
