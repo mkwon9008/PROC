@@ -6,28 +6,28 @@
 #include "Resource.h"
 #include "CircularDoubleLinkedList.hpp"
 
-// ÃÖ´ë »ı¼º°¡´É À©µµ¿ì
+// ìµœëŒ€ ìƒì„±ê°€ëŠ¥ ìœˆë„ìš°
 #define dfMAXCHILD		50
 
-//Å¸ÀÌÆ²¹Ù ÃÖ´ë ¹®ÀÚ¿­ ±æÀÌ
+//íƒ€ì´í‹€ë°” ìµœëŒ€ ë¬¸ìì—´ ê¸¸ì´
 #define MAX_LOADSTRING	100
 
-//ÃÖ´ë ¸®½ºÆ® »çÀÌÁî
+//ìµœëŒ€ ë¦¬ìŠ¤íŠ¸ ì‚¬ì´ì¦ˆ
 #define MAX_LIST_LEN	100
 
-// °æ°í½Ã ¹ß»ı À©µµ¿ì ¸Ş½ÃÁö
+// ê²½ê³ ì‹œ ë°œìƒ ìœˆë„ìš° ë©”ì‹œì§€
 #define UM_ALERT					WM_USER + 1
 #define dfALERT_CANCEL_TIMER_ID		200
 #define dfALERT_CANCEL_TIME			500
 
-// ÆùÆ®»çÀÌÁî, Å¸ÀÌÆ² / ±×·¡ÇÁÁöÇ¥
+// í°íŠ¸ì‚¬ì´ì¦ˆ, íƒ€ì´í‹€ / ê·¸ë˜í”„ì§€í‘œ
 #define dfFONT_TITLE_SIZE	20
 #define dfFONT_POINT_SIZE	12
 
-// Å¸ÀÌÆ² Ç¥½Ã¿µ¿ª ³ôÀÌ
+// íƒ€ì´í‹€ í‘œì‹œì˜ì—­ ë†’ì´
 #define dfTITLE_HEIGHT		30
 
-// ¼¼·ÎÃà ÁöÇ¥ °³¼ö
+// ì„¸ë¡œì¶• ì§€í‘œ ê°œìˆ˜
 #define dfGRID_VERT_NUM		4
 
 class CMonitorGraphUnit
@@ -37,7 +37,7 @@ private:
 	HWND _hWnd;
 	HINSTANCE _hInst;
 
-	//childÀÇ memDC »ı¼º.
+	//childì˜ memDC ìƒì„±.
 	HDC _hdc, _backMemDC;
 	HBITMAP _hOldBitMap;
 	PAINTSTRUCT _ps;
@@ -54,17 +54,17 @@ private:
 public:
 	enum TYPE
 	{
-		BAR_SINGLE_VERT,	// ¹Ù ÇÏ³ª ¼¼·Î
-		BAR_SINGLE_HORZ,	// ¹Ù ÇÏ³ª °¡·Î
-		BAR_COLUMN_VERT,	// ¹Ù ¿©·¯°³ ¼¼·Î
-		BAR_COLUMN_HORZ,	// ¹Ù ¿©·¯°³ °¡·Î
-		LINE_SINGLE,		// ¶óÀÎ ±×·¡ÇÁ ÇÏ³ª
-		LINE_MULTI,			// ¶óÀÎ ±×·¡ÇÁ ¿©·¯°³
-		PIE					// ¿ø ÆÄÀÌ ³ª´©±â
+		BAR_SINGLE_VERT,	// ë°” í•˜ë‚˜ ì„¸ë¡œ
+		BAR_SINGLE_HORZ,	// ë°” í•˜ë‚˜ ê°€ë¡œ
+		BAR_COLUMN_VERT,	// ë°” ì—¬ëŸ¬ê°œ ì„¸ë¡œ
+		BAR_COLUMN_HORZ,	// ë°” ì—¬ëŸ¬ê°œ ê°€ë¡œ
+		LINE_SINGLE,		// ë¼ì¸ ê·¸ë˜í”„ í•˜ë‚˜
+		LINE_MULTI,			// ë¼ì¸ ê·¸ë˜í”„ ì—¬ëŸ¬ê°œ
+		PIE					// ì› íŒŒì´ ë‚˜ëˆ„ê¸°
 	};
 
-	// static ¸É¹ö ÇÔ¼öÀÇ ÇÁ·Î½ÃÀú¿¡¼­ This Æ÷ÀÎÅÍ¸¦ Ã£±â À§ÇÑ
-	// HWND + Class Ptr ÀÇ Å×ÀÌºí
+	// static ë§´ë²„ í•¨ìˆ˜ì˜ í”„ë¡œì‹œì €ì—ì„œ This í¬ì¸í„°ë¥¼ ì°¾ê¸° ìœ„í•œ
+	// HWND + Class Ptr ì˜ í…Œì´ë¸”
 	typedef struct ST_HWNDtoTHIS
 	{
 		HWND				hWnd[dfMAXCHILD] = { 0, };
@@ -76,7 +76,7 @@ public:
 
 	CMonitorGraphUnit(HINSTANCE hInstance, HWND hWndParent, COLORREF BackColor, TYPE enType, int iPosX, int iPosY, int iWidth, int iHeight)
 	{
-		//À©µµ¿ì Å¬·¡½º µî·Ï
+		//ìœˆë„ìš° í´ë˜ìŠ¤ ë“±ë¡
 		//MyRegisterClass(hInstance);
 		WNDCLASSEXW wcex;
 		wcex.cbSize = sizeof(WNDCLASSEX);
@@ -95,14 +95,14 @@ public:
 
 		RegisterClassExW(&wcex);
 
-		//À©µµ¿ì Ã¢ »ı¼º
+		//ìœˆë„ìš° ì°½ ìƒì„±
 		if (!InitInstance(hInstance, SW_SHOW, hWndParent, iPosX, iPosY, iWidth, iHeight))
 		{
 			throw;
 		}
-		HDC _hdc = GetDC(_hWnd);		//_hWnd¿¡¼­ _hdc·Î DC¸¦ ¹Ş¾Æ¿È.
-		GetClientRect(_hWnd, &_window_rt);	//_hWndÀÇ RECT»çÀÌÁî¸¦ _window_rt¿¡ Set.
-		_backMemDC = CreateCompatibleDC(_hdc);	//pDC·Î ÁöÁ¤µÈ ÀåÄ¡¿Í È£È¯µÇ´Â ¸Ş¸ğ¸® µğ¹ÙÀÌ½º ÄÁÅØ½ºÆ®¸¦ ¸¸µì´Ï´Ù.
+		HDC _hdc = GetDC(_hWnd);		//_hWndì—ì„œ _hdcë¡œ DCë¥¼ ë°›ì•„ì˜´.
+		GetClientRect(_hWnd, &_window_rt);	//_hWndì˜ RECTì‚¬ì´ì¦ˆë¥¼ _window_rtì— Set.
+		_backMemDC = CreateCompatibleDC(_hdc);	//pDCë¡œ ì§€ì •ëœ ì¥ì¹˜ì™€ í˜¸í™˜ë˜ëŠ” ë©”ëª¨ë¦¬ ë””ë°”ì´ìŠ¤ ì»¨í…ìŠ¤íŠ¸ë¥¼ ë§Œë“­ë‹ˆë‹¤.
 		
 		_backBitMap = CreateCompatibleBitmap(_hdc, _window_rt.right, _window_rt.bottom);
 		_hOldBitMap = (HBITMAP)SelectObject(_backMemDC, _backBitMap);
@@ -116,14 +116,14 @@ public:
 
 	}
 
-	// ±×·¡ÇÁ Á¤º¸ ÀÔ·Â, À©µµ¿ì ÀÌ¸§, ÃÖ´ëÄ¡, °æº¸¼öÄ¡ (0ÀÌ¸é ¾øÀ½)
+	// ê·¸ë˜í”„ ì •ë³´ ì…ë ¥, ìœˆë„ìš° ì´ë¦„, ìµœëŒ€ì¹˜, ê²½ë³´ìˆ˜ì¹˜ (0ì´ë©´ ì—†ìŒ)
 	void SetInformation(WCHAR *szTitle, int iDataMax, int iDataAlert);
 
-	// ±×·¡ÇÁ ¶óÀÎ ¼± ÁöÁ¤, ¼ö½Ã·Î È£Ãâ °¡´É,
+	// ê·¸ë˜í”„ ë¼ì¸ ì„  ì§€ì •, ìˆ˜ì‹œë¡œ í˜¸ì¶œ ê°€ëŠ¥,
 	void SetLineColor(int iWeight, COLORREF BackColor);
 
 	
-	// À©µµ¿ì ÇÁ·Î½ÃÀú
+	// ìœˆë„ìš° í”„ë¡œì‹œì €
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		switch (message)
@@ -161,14 +161,14 @@ public:
 			int iCnt = 0;
 			while (iCnt < pThis->CList.getSize())
 			{
-				int popedVar = pThis->CList.peek(iCnt);		//¸®½ºÆ®¿¡¼­ iCnt¹øÂ° ÀÖ´Â ¿ä¼ÒÀÇ data¸¦ popedVar¿¡ ³ÖÀ½.
+				int popedVar = pThis->CList.peek(iCnt);		//ë¦¬ìŠ¤íŠ¸ì—ì„œ iCntë²ˆì§¸ ìˆëŠ” ìš”ì†Œì˜ dataë¥¼ popedVarì— ë„£ìŒ.
 			
-				pThis->_hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));	//Ææ ¼ÂÆÃ.
-				SelectObject(pThis->_backMemDC, pThis->_hPen);			//Ææ°ú DC¸¦ ¹­À½.
+				pThis->_hPen = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));	//íœ ì…‹íŒ….
+				SelectObject(pThis->_backMemDC, pThis->_hPen);			//íœê³¼ DCë¥¼ ë¬¶ìŒ.
 				
-				LineTo(pThis->_backMemDC, iCnt * 3, popedVar);			//_backMemDC¿¡ iCnt*3(xÃà), popedVar(YÃà)±îÁö ¼±±ß±â.
-				//InvalidateRect(hWnd, NULL, true);				//WM_PAINTÈ£Ãâ. ¸ğµÎÁö¿ì±â(false).
-				DeleteObject(pThis->_hPen);							//´Ù½èÀ¸´Ï hPen¹İ³³.
+				LineTo(pThis->_backMemDC, iCnt * 3, popedVar);			//_backMemDCì— iCnt*3(xì¶•), popedVar(Yì¶•)ê¹Œì§€ ì„ ê¸‹ê¸°.
+				//InvalidateRect(hWnd, NULL, true);				//WM_PAINTí˜¸ì¶œ. ëª¨ë‘ì§€ìš°ê¸°(false).
+				DeleteObject(pThis->_hPen);							//ë‹¤ì¼ìœ¼ë‹ˆ hPenë°˜ë‚©.
 				iCnt++;
 			}
 			
@@ -186,7 +186,7 @@ public:
 
 	
 	
-	// µ¥ÀÌÅÍ ³Ö±â.
+	// ë°ì´í„° ë„£ê¸°.
 	BOOL InsertData(int iData)
 	{
 		if (CList.getSize() > MAX_LIST_LEN)
@@ -194,8 +194,8 @@ public:
 			CList.popHead();
 		}
 
-		rVal = iData; //·£´ı°ª »êÃâ, 350±×·¡ÇÁ º¸Á¤.
-		CList.InsertTail(rVal); //µÚ¿¡ ·£´ı°ª Çª½¬.
+		rVal = iData; //ëœë¤ê°’ ì‚°ì¶œ, 350ê·¸ë˜í”„ ë³´ì •.
+		CList.InsertTail(rVal); //ë’¤ì— ëœë¤ê°’ í‘¸ì‰¬.
 
 		InvalidateRect(_hWnd, NULL, true);
 		return true;
@@ -223,7 +223,7 @@ public:
 protected:
 
 	
-	// À©µµ¿ì ÇÚµé, this Æ÷ÀÎÅÍ ¸ÅÄª Å×ÀÌºí °ü¸®.
+	// ìœˆë„ìš° í•¸ë“¤, this í¬ì¸í„° ë§¤ì¹­ í…Œì´ë¸” ê´€ë¦¬.
 	BOOL PutThis(void)
 	{
 		for (int iCount = 0; iCount < dfMAXCHILD; iCount++)
@@ -255,8 +255,8 @@ protected:
 
 
 	private:
-		// ºÎ¸ğ À©µµ¿ì ÇÚµé, ³» À©µµ¿ì ÇÚµé, ÀÎ½ºÅÏ½º ÇÚµé
-		// À©µµ¿ì À§Ä¡,Å©±â,»ö»ó, ±×·¡ÇÁ Å¸ÀÔ µî.. ÀÚ·á
+		// ë¶€ëª¨ ìœˆë„ìš° í•¸ë“¤, ë‚´ ìœˆë„ìš° í•¸ë“¤, ì¸ìŠ¤í„´ìŠ¤ í•¸ë“¤
+		// ìœˆë„ìš° ìœ„ì¹˜,í¬ê¸°,ìƒ‰ìƒ, ê·¸ë˜í”„ íƒ€ì… ë“±.. ìë£Œ
 		TYPE		_enGraphType;
 
 };
