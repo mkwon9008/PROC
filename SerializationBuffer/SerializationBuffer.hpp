@@ -11,10 +11,10 @@
 class CPacket
 {
 private:
-	char* m_buf;		//¹öÆÛ.
-	int m_iBufWritePos;		//ÇöÀç »ç¿ëÁßÀÎ ¹öÆÛÀÇ »çÀÌÁîÀÌ¸é¼­ µ¿½Ã¿¡ WritePos¿ªÇÒµµ °âÇÔ.
-	int m_bufSize;		//¹öÆÛÀÇ »çÀÌÁî. (Å¬·¡½º ¼±¾ð½Ã ÃÊ±â¼³Á¤°ª)
-	int m_iBufReadPos;	//¹öÆÛÀÇ ReadPos.
+	char* m_buf;		//ë²„í¼.
+	int m_iBufWritePos;		//í˜„ìž¬ ì‚¬ìš©ì¤‘ì¸ ë²„í¼ì˜ ì‚¬ì´ì¦ˆì´ë©´ì„œ ë™ì‹œì— WritePosì—­í• ë„ ê²¸í•¨.
+	int m_bufSize;		//ë²„í¼ì˜ ì‚¬ì´ì¦ˆ. (í´ëž˜ìŠ¤ ì„ ì–¸ì‹œ ì´ˆê¸°ì„¤ì •ê°’)
+	int m_iBufReadPos;	//ë²„í¼ì˜ ReadPos.
 
 	enum en_ERRNO
 	{
@@ -30,8 +30,8 @@ private:
 public:
 	enum en_PACKET
 	{
-		eBUFFER_DEFAULT = 1024,		// ÆÐÅ¶ÀÇ ±âº» ¹öÆÛ »çÀÌÁî.
-		ePACKET_MAX_SIZE = 1024,	// ÆÐÅ¶ÀÇ ÃÖ´ë »çÀÌÁî
+		eBUFFER_DEFAULT = 1024,		// íŒ¨í‚·ì˜ ê¸°ë³¸ ë²„í¼ ì‚¬ì´ì¦ˆ.
+		ePACKET_MAX_SIZE = 1024,	// íŒ¨í‚·ì˜ ìµœëŒ€ ì‚¬ì´ì¦ˆ
 	};
 
 	CPacket();
@@ -42,43 +42,43 @@ public:
 
 
 protected:
-	// ÆÐÅ¶ ÃÊ±âÈ­.
+	// íŒ¨í‚· ì´ˆê¸°í™”.
 	void	Initial(int iBufferSize = eBUFFER_DEFAULT);
 	void	Release(void);
 	int		ErrCatch(errno_t err);
 
 public:
-	// ÆÐÅ¶ Ã»¼Ò.
+	// íŒ¨í‚· ì²­ì†Œ.
 	void	Clear(void);
 
-	// ¹öÆÛ »çÀÌÁî ¾ò±â.
+	// ë²„í¼ ì‚¬ì´ì¦ˆ ì–»ê¸°.
 	int		GetBufferSize(void);
 
-	// ÆÐÅ¶ ½ÇÁ¦ ÃÑ »çÀÌÁî (ÆÐÅ¶ Çì´õºÎºÐÀ» Á¦¿ÜÇÑ ½ÇÁ¦ »ç¿ë°¡´ÉÇÑ »çÀÌÁî)
+	// íŒ¨í‚· ì‹¤ì œ ì´ ì‚¬ì´ì¦ˆ (íŒ¨í‚· í—¤ë”ë¶€ë¶„ì„ ì œì™¸í•œ ì‹¤ì œ ì‚¬ìš©ê°€ëŠ¥í•œ ì‚¬ì´ì¦ˆ)
 	int		GetEmptyPacketSize(void);
 
-	// ÀÌ¹Ì ÃßÃâÇß´ø ÆÐÅ¶Àº Á¦¿ÜÇÏ°í, ÃßÃâ °¡´ÉÇÑ ÆÐÅ¶ »çÀÌÁî.  ( ¹öÆÛ¿¡ÀÖ´Â ÆÐÅ¶»çÀÌÁî - ÀÌ¹Ì ÃßÃâÇÑ ÆÐÅ¶»çÀÌÁî)
+	// ì´ë¯¸ ì¶”ì¶œí–ˆë˜ íŒ¨í‚·ì€ ì œì™¸í•˜ê³ , ì¶”ì¶œ ê°€ëŠ¥í•œ íŒ¨í‚· ì‚¬ì´ì¦ˆ.  ( ë²„í¼ì—ìžˆëŠ” íŒ¨í‚·ì‚¬ì´ì¦ˆ - ì´ë¯¸ ì¶”ì¶œí•œ íŒ¨í‚·ì‚¬ì´ì¦ˆ)
 	int		GetRemainPacketSize(void);
 
-	// ¹öÆÛ Æ÷ÀÎÅÍ ¾ò±â.
+	// ë²„í¼ í¬ì¸í„° ì–»ê¸°.
 	char*	GetBufferReadPtr(void);
 
-	// ¹öÆÛÀÇ m_buf[0] ÀÇ ptr¾ò±â.
+	// ë²„í¼ì˜ m_buf[0] ì˜ ptrì–»ê¸°.
 	char* GetBufferZeroPtr(void);
 
-	// ¹öÆÛ Pos ÀÌµ¿. (À½¼öÀÌµ¿Àº ¾ÈµÊ)
-	// GetBufferPtr ÇÔ¼ö¸¦ ÀÌ¿ëÇÏ¿© ¿ÜºÎ¿¡¼­ °­Á¦·Î ¹öÆÛ ³»¿ëÀ» ¼öÁ¤ÇÒ °æ¿ì »ç¿ë. 
+	// ë²„í¼ Pos ì´ë™. (ìŒìˆ˜ì´ë™ì€ ì•ˆë¨)
+	// GetBufferPtr í•¨ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ ì™¸ë¶€ì—ì„œ ê°•ì œë¡œ ë²„í¼ ë‚´ìš©ì„ ìˆ˜ì •í•  ê²½ìš° ì‚¬ìš©. 
 	int		MoveWritePos(int iSize);
 	int		MoveReadPos(int iSize);
 
-	//¹öÆÛ¿¡¼­ µ¥ÀÌÅÍ »©±â. (char *)Dest Æ÷ÀÎÅÍ. (int)Size.
+	//ë²„í¼ì—ì„œ ë°ì´í„° ë¹¼ê¸°. (char *)Dest í¬ì¸í„°. (int)Size.
 	int		GetData(char *chpDest, int iSize);
 
-	//¹öÆÛ¿¡ µ¥ÀÌÅÍ »ðÀÔ. (char *)Src Æ÷ÀÎÅÍ. (int)SrcSize.
+	//ë²„í¼ì— ë°ì´í„° ì‚½ìž…. (char *)Src í¬ì¸í„°. (int)SrcSize.
 	int		PutData(char *chpSrc, int iSrcSize);
 
 
-	//¿¬»êÀÚ ¿À¹ö·Îµù.
+	//ì—°ì‚°ìž ì˜¤ë²„ë¡œë”©.
 	CPacket& operator << (char* cPtrData);
 	CPacket& operator << (int& iData);
 	CPacket& operator << (INT64& i64Data);
@@ -86,7 +86,7 @@ public:
 	CPacket& operator << (BYTE& byData);
 	CPacket& operator << (WORD& wdData);
 
-	//int operator >> (char* chpDest); ¹®ÀÚ¿­Àº »¬ °ªÀ» operator·Î ÁöÁ¤ÇÒ ¼ö ¾øÀ½.. ±×³É packet.GetData() ·Î ¾²ÀÚ.
+	//int operator >> (char* chpDest); ë¬¸ìžì—´ì€ ëº„ ê°’ì„ operatorë¡œ ì§€ì •í•  ìˆ˜ ì—†ìŒ.. ê·¸ëƒ¥ packet.GetData() ë¡œ ì“°ìž.
 	int operator >> (int& iData);
 	int operator >> (INT64& i64Data);
 	int operator >> (double& dData);
