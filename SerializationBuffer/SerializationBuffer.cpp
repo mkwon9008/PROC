@@ -21,19 +21,19 @@ CPacket::~CPacket()
 }
 
 
-// ÆĞÅ¶ ÃÊ±âÈ­.
+// íŒ¨í‚· ì´ˆê¸°í™”.
 void CPacket::Initial(int iBufferSize)
 {
 	if (iBufferSize > ePACKET_MAX_SIZE)
 		return;
 	
-	//ÆĞÅ¶Çì´õ»çÀÌÁî 1(sizeof(char)) À» ´õÇØÁÜÀ¸·Î½á ½Ç »ç¿ë°¡´ÉÇÑ ¿ë·®À» iBufferSize·Î ¸ÂÃçÁÜ.
+	//íŒ¨í‚·í—¤ë”ì‚¬ì´ì¦ˆ 1(sizeof(char)) ì„ ë”í•´ì¤Œìœ¼ë¡œì¨ ì‹¤ ì‚¬ìš©ê°€ëŠ¥í•œ ìš©ëŸ‰ì„ iBufferSizeë¡œ ë§ì¶°ì¤Œ.
 	m_buf = new char[iBufferSize + 1]; 
 	m_bufSize = iBufferSize;
 	m_iBufWritePos = 0;
 	m_iBufReadPos = 0;
 	memset(m_buf, 0, iBufferSize + 1);
-	m_buf[iBufferSize] = '\0'; //¹öÆÛ³¡ null»ğÀÔ.
+	m_buf[iBufferSize] = '\0'; //ë²„í¼ë nullì‚½ì….
 }
 
 int CPacket::ErrCatch(errno_t err)
@@ -91,39 +91,39 @@ int CPacket::ErrCatch(errno_t err)
 	return -1;
 }
 
-//ÆĞÅ¶ ÆÄ±«. (±×³É ÆÄ±«ÀÚ È£Ãâ ÇØ¹ö¸®ÀÚ)
+//íŒ¨í‚· íŒŒê´´. (ê·¸ëƒ¥ íŒŒê´´ì í˜¸ì¶œ í•´ë²„ë¦¬ì)
 void CPacket::Release(void)
 {
 	CPacket::~CPacket();
 }
 
-// ÆĞÅ¶ Ã»¼Ò.
+// íŒ¨í‚· ì²­ì†Œ.
 void CPacket::Clear(void)
 {
 	memset(m_buf, 0, m_bufSize);
 	return;
 }
 
-// ¹öÆÛ »çÀÌÁî ¾ò±â.
+// ë²„í¼ ì‚¬ì´ì¦ˆ ì–»ê¸°.
 int	CPacket::GetBufferSize(void)
 {
 	return m_bufSize;
 }
 
-// ÆĞÅ¶ »ı¼º ÈÄ ¾ÆÁ÷ »ç¿ëÇÏÁö ¾ÊÀº ºó ÆĞÅ¶ÀÇ »çÀÌÁî (»ç¿ë°¡´ÉÇÑ ºó ¹öÆÛÀÇ »çÀÌÁî)
+// íŒ¨í‚· ìƒì„± í›„ ì•„ì§ ì‚¬ìš©í•˜ì§€ ì•Šì€ ë¹ˆ íŒ¨í‚·ì˜ ì‚¬ì´ì¦ˆ (ì‚¬ìš©ê°€ëŠ¥í•œ ë¹ˆ ë²„í¼ì˜ ì‚¬ì´ì¦ˆ)
 int	CPacket::GetEmptyPacketSize(void)
 {
 	return (m_bufSize - m_iBufWritePos);
 }
 
-// ÀÌ¹Ì ÃßÃâÇß´ø ÆĞÅ¶Àº Á¦¿ÜÇÏ°í, ÃßÃâ °¡´ÉÇÑ ÆĞÅ¶ »çÀÌÁî.  
-// ( ¹öÆÛ¿¡ÀÖ´Â ÆĞÅ¶»çÀÌÁî - ÀÌ¹Ì ÃßÃâÇÑ ÆĞÅ¶»çÀÌÁî) -> ( m_iBufWritePos - m_iBufReadPos)
+// ì´ë¯¸ ì¶”ì¶œí–ˆë˜ íŒ¨í‚·ì€ ì œì™¸í•˜ê³ , ì¶”ì¶œ ê°€ëŠ¥í•œ íŒ¨í‚· ì‚¬ì´ì¦ˆ.  
+// ( ë²„í¼ì—ìˆëŠ” íŒ¨í‚·ì‚¬ì´ì¦ˆ - ì´ë¯¸ ì¶”ì¶œí•œ íŒ¨í‚·ì‚¬ì´ì¦ˆ) -> ( m_iBufWritePos - m_iBufReadPos)
 int CPacket::GetRemainPacketSize(void)
 {
 	return ( m_iBufWritePos - m_iBufReadPos );
 }
 
-// ¹öÆÛ Æ÷ÀÎÅÍ ¾ò±â.
+// ë²„í¼ í¬ì¸í„° ì–»ê¸°.
 char* CPacket::GetBufferReadPtr(void)
 {
 	return &m_buf[m_iBufReadPos];
@@ -134,8 +134,8 @@ char* CPacket::GetBufferZeroPtr(void)
 	return &m_buf[0];
 }
 
-// ¹öÆÛ Pos ÀÌµ¿. (À½¼öÀÌµ¿Àº ¾ÈµÊ)
-// GetBufferPtr ÇÔ¼ö¸¦ ÀÌ¿ëÇÏ¿© ¿ÜºÎ¿¡¼­ °­Á¦·Î ¹öÆÛ ³»¿ëÀ» ¼öÁ¤ÇÒ °æ¿ì »ç¿ë. 
+// ë²„í¼ Pos ì´ë™. (ìŒìˆ˜ì´ë™ì€ ì•ˆë¨)
+// GetBufferPtr í•¨ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ ì™¸ë¶€ì—ì„œ ê°•ì œë¡œ ë²„í¼ ë‚´ìš©ì„ ìˆ˜ì •í•  ê²½ìš° ì‚¬ìš©. 
 int	CPacket::MoveWritePos(int iSize)
 {
 	m_iBufWritePos += iSize;
@@ -147,26 +147,26 @@ int	CPacket::MoveReadPos(int iSize)
 	return m_iBufReadPos;
 }
 
-//¹öÆÛ¿¡¼­ µ¥ÀÌÅÍ »©±â. (char *)Dest Æ÷ÀÎÅÍ. (int)Size. (chpDest´Â ¸Ş¸ğ¸® ÇÒ´çÀÌ µÇ¾î ÀÖ¾î¾ß ÇÔ)
+//ë²„í¼ì—ì„œ ë°ì´í„° ë¹¼ê¸°. (char *)Dest í¬ì¸í„°. (int)Size. (chpDestëŠ” ë©”ëª¨ë¦¬ í• ë‹¹ì´ ë˜ì–´ ìˆì–´ì•¼ í•¨)
 int	CPacket::GetData(char *chpDest, int iSize)
 {
 	if(chpDest == nullptr)
 		return ErrCatch(-3);
 
-	//ÀÓ½Ã¹è¿­ ¼±¾ğ & ÃÊ±âÈ­.
+	//ì„ì‹œë°°ì—´ ì„ ì–¸ & ì´ˆê¸°í™”.
 	char* temp = new char[iSize + 1];
 	memset(temp, 0xff, sizeof(char) * (iSize + 1));
 	temp[iSize] = '\0';
-	int remainSize = CPacket::GetRemainPacketSize(); //ÃÖ´ë »ÌÀ»¼ö ÀÖ´Â ¼ö.
+	int remainSize = CPacket::GetRemainPacketSize(); //ìµœëŒ€ ë½‘ì„ìˆ˜ ìˆëŠ” ìˆ˜.
 
-	if (iSize <= remainSize) //³²¾ÆÀÖ´Â(»ÌÀ»¼öÀÖ´Â)»çÀÌÁî°¡ »ÌÀ¸·Á´Â »çÀÌÁîº¸´Ù Å©°Å³ª °°À» °æ¿ì
+	if (iSize <= remainSize) //ë‚¨ì•„ìˆëŠ”(ë½‘ì„ìˆ˜ìˆëŠ”)ì‚¬ì´ì¦ˆê°€ ë½‘ìœ¼ë ¤ëŠ” ì‚¬ì´ì¦ˆë³´ë‹¤ í¬ê±°ë‚˜ ê°™ì„ ê²½ìš°
 	{
 		char* m_buf_ReadPosPtr = CPacket::GetBufferReadPtr();
-		//ÀÓ½Ã¹è¿­¿¡ iSize¸¸Å­ ¹öÆÛ¿¡¼­ memcpy_s Ä«ÇÇ.
+		//ì„ì‹œë°°ì—´ì— iSizeë§Œí¼ ë²„í¼ì—ì„œ memcpy_s ì¹´í”¼.
 		if (memcpy_s(temp, sizeof(char) * (iSize), m_buf_ReadPosPtr, sizeof(char) * (iSize)))
 			return ErrCatch(-4);
 
-		//chpDest¿¡ tempÀÇ °ªÀ» µ¤¾î ¾¸.
+		//chpDestì— tempì˜ ê°’ì„ ë®ì–´ ì”€.
 		if (memcpy_s(chpDest, sizeof(char) * (iSize), temp, sizeof(char) * (iSize)))
 			return ErrCatch(-5);
 		
@@ -174,36 +174,36 @@ int	CPacket::GetData(char *chpDest, int iSize)
 		delete[] temp;
 		return iSize;
 	}
-	else //»ÌÀ¸·Á´Â »çÀÌÁî°¡ ³²¾ÆÀÖ´Â »çÀÌÁîº¸´Ù Å¬ °æ¿ì. 
+	else //ë½‘ìœ¼ë ¤ëŠ” ì‚¬ì´ì¦ˆê°€ ë‚¨ì•„ìˆëŠ” ì‚¬ì´ì¦ˆë³´ë‹¤ í´ ê²½ìš°. 
 	{
-		/*!»ÌÀ»¼ö ÀÖ´Â¸¸Å­¸¸ »Ì´Â´Ù? ÀÌ°Ç ¸»ÀÌ ¾ÈµÊ.
-		¾ÖÃÊ¿¡ ¹öÆÛ¿¡ 50°®°íÀÖ´Âµ¥ 60´Ş¶ó°í ÇÏ´Â°Å ÀÚÃ¼°¡ ÆĞÅ¶°è»êÀÌ Àß¸øµÈ °æ¿ìÀÓ.
-		ÇØ´ç ¶óÀÌºê·¯¸®ÀÇ »ç¿ëÀÚ(°³¹ßÀÚ)°¡ Àß¸ø¾´°É·Î »ı°¢ÇØ¾ßÇÔ.!*/
+		/*!ë½‘ì„ìˆ˜ ìˆëŠ”ë§Œí¼ë§Œ ë½‘ëŠ”ë‹¤? ì´ê±´ ë§ì´ ì•ˆë¨.
+		ì• ì´ˆì— ë²„í¼ì— 50ê°–ê³ ìˆëŠ”ë° 60ë‹¬ë¼ê³  í•˜ëŠ”ê±° ìì²´ê°€ íŒ¨í‚·ê³„ì‚°ì´ ì˜ëª»ëœ ê²½ìš°ì„.
+		í•´ë‹¹ ë¼ì´ë¸ŒëŸ¬ë¦¬ì˜ ì‚¬ìš©ì(ê°œë°œì)ê°€ ì˜ëª»ì“´ê±¸ë¡œ ìƒê°í•´ì•¼í•¨.!*/
 	}	
 	return ErrCatch(-7);
 }
 
-//¹öÆÛ¿¡ µ¥ÀÌÅÍ »ğÀÔ. (char *)Src Æ÷ÀÎÅÍ. (int)SrcSize.
+//ë²„í¼ì— ë°ì´í„° ì‚½ì…. (char *)Src í¬ì¸í„°. (int)SrcSize.
 int	CPacket::PutData(char *chpSrc, int iSrcSize)
 {
 	if (chpSrc == nullptr)
 		return ErrCatch(-1);
 
-	//»ç¿ë°¡´ÉÇÑ ¿ë·® Ã¼Å©.
+	//ì‚¬ìš©ê°€ëŠ¥í•œ ìš©ëŸ‰ ì²´í¬.
 	int iAvailableSize = CPacket::GetEmptyPacketSize();
 
 	if (iSrcSize <= iAvailableSize)
 	{
 		if (memcpy_s(&m_buf[m_iBufWritePos], sizeof(char) * iSrcSize, chpSrc, sizeof(char) * iSrcSize))
 			return ErrCatch(-6);
-		MoveWritePos(iSrcSize); //iSrcSize¸¸Å­ WritePosÀÌµ¿.
-		return iSrcSize;		//¼º°øÇÏ¸é ³ÖÀº ¼ö ¸¸Å­ ¸®ÅÏ.
+		MoveWritePos(iSrcSize); //iSrcSizeë§Œí¼ WritePosì´ë™.
+		return iSrcSize;		//ì„±ê³µí•˜ë©´ ë„£ì€ ìˆ˜ ë§Œí¼ ë¦¬í„´.
 	}
-	else //³ÖÀ¸·Á´Â »çÀÌÁî°¡ ³ÖÀ» ¼ö ÀÖ´Â »çÀÌÁîº¸´Ù Å« °æ¿ì.
+	else //ë„£ìœ¼ë ¤ëŠ” ì‚¬ì´ì¦ˆê°€ ë„£ì„ ìˆ˜ ìˆëŠ” ì‚¬ì´ì¦ˆë³´ë‹¤ í° ê²½ìš°.
 	{
-		/*!³ÖÀ» ¼ö ÀÖ´Â¸¸Å­¸¸ ³Ö´Â´Ù? ÀÌ°Íµµ ¸»ÀÌ ¾ÈµÊ.
-		³Ö´Ù°¡ Áß°£¿¡ Â©¸° ÆĞÅ¶À» ¹ö¸®¸é ±×°Ç ¿Ï¼ºµÈ ÇÏ³ªÀÇ ÆĞÅ¶ÀÌ ¾Æ´Ô.
-		¿Ï¼ºµÇÁö ¾Ê´Â ÆĞÅ¶Àº ±×³É ¾²·¹±â°ªÀÓ. ¾µµ¥°¡ ¾øÀ½. µû¶ó¼­ ³ÖÀ» ÇÊ¿äµµ ¾ø´Ù.!*/
+		/*!ë„£ì„ ìˆ˜ ìˆëŠ”ë§Œí¼ë§Œ ë„£ëŠ”ë‹¤? ì´ê²ƒë„ ë§ì´ ì•ˆë¨.
+		ë„£ë‹¤ê°€ ì¤‘ê°„ì— ì§¤ë¦° íŒ¨í‚·ì„ ë²„ë¦¬ë©´ ê·¸ê±´ ì™„ì„±ëœ í•˜ë‚˜ì˜ íŒ¨í‚·ì´ ì•„ë‹˜.
+		ì™„ì„±ë˜ì§€ ì•ŠëŠ” íŒ¨í‚·ì€ ê·¸ëƒ¥ ì“°ë ˆê¸°ê°’ì„. ì“¸ë°ê°€ ì—†ìŒ. ë”°ë¼ì„œ ë„£ì„ í•„ìš”ë„ ì—†ë‹¤.!*/
 	}
 	return ErrCatch(-2);
 }
