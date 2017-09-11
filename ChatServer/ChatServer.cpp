@@ -1,9 +1,9 @@
 #include "ChatServer.hpp" 
 
-SOCKET g_ListenSocket = INVALID_SOCKET;			//»ç¿ëÀÚ accept¿ë listenSocket.
+SOCKET g_ListenSocket = INVALID_SOCKET;			//ì‚¬ìš©ì acceptìš© listenSocket.
 
-/* ½ÇÁ¦ ¼­ºñ½º ½Ã ÀÌ·¸°Ô »ç¿ëÇÏ¸é Àı´ë ¾ÈµÊ. */
-//À¯Àú °íÀ¯Å°, ¹æ °íÀ¯ Å°¸¦ ¸¸µé Àü¿ª º¯¼ö, ÇÒ´ç ½Ã ¸¶´Ù +1 ÇØ¼­ »ç¿ë.
+/* ì‹¤ì œ ì„œë¹„ìŠ¤ ì‹œ ì´ë ‡ê²Œ ì‚¬ìš©í•˜ë©´ ì ˆëŒ€ ì•ˆë¨. */
+//ìœ ì € ê³ ìœ í‚¤, ë°© ê³ ìœ  í‚¤ë¥¼ ë§Œë“¤ ì „ì—­ ë³€ìˆ˜, í• ë‹¹ ì‹œ ë§ˆë‹¤ +1 í•´ì„œ ì‚¬ìš©.
 DWORD g_dwKey_UserNO = 1;
 DWORD g_dwKey_RoomNO = 1;
 /*********************************************/
@@ -16,11 +16,11 @@ bool NetworkInit(void)
 void NetworkProcess(void)
 {
 	st_CLIENT* pClient;
-	DWORD	UserTable_NO[FD_SETSIZE];		//FD_SET¿¡ µî·ÏµÈ UserNo ÀúÀå.
-	SOCKET	UserTable_SOCKET[FD_SETSIZE];	//FD_SET¿¡ µî·ÏµÈ ¼ÒÄÏÀ» ÀúÀå.
+	DWORD	UserTable_NO[FD_SETSIZE];		//FD_SETì— ë“±ë¡ëœ UserNo ì €ì¥.
+	SOCKET	UserTable_SOCKET[FD_SETSIZE];	//FD_SETì— ë“±ë¡ëœ ì†Œì¼“ì„ ì €ì¥.
 	int iSocketCount = 0;
 
-	//FD_SETÀº FD_SETSIZE¸¸Å­¸¸ ¼ÒÄÏ °Ë»ç°¡ °¡´ÉÇÏ´Ù. ±×·¯¹Ç·Î ±× °³¼ö¸¸Å­ ³Ö¾î¼­ »ç¿ëÇÔ.
+	//FD_SETì€ FD_SETSIZEë§Œí¼ë§Œ ì†Œì¼“ ê²€ì‚¬ê°€ ê°€ëŠ¥í•˜ë‹¤. ê·¸ëŸ¬ë¯€ë¡œ ê·¸ ê°œìˆ˜ë§Œí¼ ë„£ì–´ì„œ ì‚¬ìš©í•¨.
 	FD_SET ReadSet;
 	FD_SET WriteSet;
 	FD_ZERO(&ReadSet);
@@ -28,9 +28,9 @@ void NetworkProcess(void)
 	memset(UserTable_NO, -1, sizeof(DWORD) * FD_SETSIZE);
 	memset(UserTable_SOCKET, INVALID_SOCKET, sizeof(SOCKET) * FD_SETSIZE);
 
-	//ListenSocket ³Ö±â.
+	//ListenSocket ë„£ê¸°.
 	FD_SET(g_ListenSocket, &ReadSet);
-	UserTable_NO[iSocketCount] = 0; //ListenSocketÀ» 0À¸·Î ¼ÂÆÃ.
+	UserTable_NO[iSocketCount] = 0; //ListenSocketì„ 0ìœ¼ë¡œ ì…‹íŒ….
 	UserTable_SOCKET[iSocketCount] = g_ListenSocket;
 	iSocketCount++;
 	
@@ -38,24 +38,24 @@ void NetworkProcess(void)
 	for (ClientIter = g_ClientMap.begin(); ClientIter != g_ClientMap.end(); /*empty*/)
 	{
 		pClient = ClientIter->second;
-		ClientIter++;		//ÇÏ´Ü SelectSocket ³»ºÎ¿¡¼­ Å¬¶ó ¸®½ºÆ®¸¦ »èÁ¦ÇÏ´Â °æ¿ì°¡ ÀÖ¾î¼­..
+		ClientIter++;		//í•˜ë‹¨ SelectSocket ë‚´ë¶€ì—ì„œ í´ë¼ ë¦¬ìŠ¤íŠ¸ë¥¼ ì‚­ì œí•˜ëŠ” ê²½ìš°ê°€ ìˆì–´ì„œ..
 		
-		//ÇØ´ç Å¬¶óÀÌ¾ğÆ® ReadSet µî·Ï.
-		//SendQueue¿¡ µ¥ÀÌÅÍ°¡ ÀÖ´Ù¸é WriteSet µî·Ï.
+		//í•´ë‹¹ í´ë¼ì´ì–¸íŠ¸ ReadSet ë“±ë¡.
+		//SendQueueì— ë°ì´í„°ê°€ ìˆë‹¤ë©´ WriteSet ë“±ë¡.
 		UserTable_NO[iSocketCount] = pClient->dwUserNO;
 		UserTable_SOCKET[iSocketCount] = pClient->Socket;
 
 		FD_SET(pClient->Socket, &ReadSet);
 
-		//Å¬¶óÀÌ¾ğÆ®ÀÇ SendQueue(¸µ¹öÆÛ)¿¡ ¹«¾ùÀÎ°¡ Àü¼ÛÇÒ µ¥ÀÌÅÍ°¡ ÀÖ´Ù¸é?
+		//í´ë¼ì´ì–¸íŠ¸ì˜ SendQueue(ë§ë²„í¼)ì— ë¬´ì—‡ì¸ê°€ ì „ì†¡í•  ë°ì´í„°ê°€ ìˆë‹¤ë©´?
 		if (pClient->SendQueue.GetUseSize() > 0)
 		{
-			//Àü¼ÛÇÒ µ¥ÀÌÅÍ°¡ ÀÖ´Â ¼ÒÄÏÀ» WriteSet¿¡ µî·Ï.
+			//ì „ì†¡í•  ë°ì´í„°ê°€ ìˆëŠ” ì†Œì¼“ì„ WriteSetì— ë“±ë¡.
 			FD_SET(pClient->Socket, &WriteSet);
 		}
 		iSocketCount++;
 
-		//select ÃÖ´ëÄ¡ µµ´Ş. ¸¸µé¾îÁø Å×ÀÌºí Á¤º¸·Î selectÈ£Ãâ ÈÄ Á¤¸®.
+		//select ìµœëŒ€ì¹˜ ë„ë‹¬. ë§Œë“¤ì–´ì§„ í…Œì´ë¸” ì •ë³´ë¡œ selectí˜¸ì¶œ í›„ ì •ë¦¬.
 		if (FD_SETSIZE <= iSocketCount)
 		{
 			SelectSocket(UserTable_NO, UserTable_SOCKET, &ReadSet, &WriteSet);
@@ -86,30 +86,30 @@ void netProc_Send(DWORD dwUserNO)
 	int iResult;
 	int iSendSize;
 
-	//ÇØ´ç »ç¿ëÀÚ ¼¼¼Ç Ã£±â.
+	//í•´ë‹¹ ì‚¬ìš©ì ì„¸ì…˜ ì°¾ê¸°.
 	pClient = FindClient(dwUserNO);
 	if (pClient == nullptr)
 	{
 		return;
 	}
 
-	//sendQueue¿¡ ÀÖ´Â µ¥ÀÌÅÍµéÀ» ÃÖ´ë dfNETWORK_WSABUFF_SIZE Å©±â·Î º¸³½´Ù.
+	//sendQueueì— ìˆëŠ” ë°ì´í„°ë“¤ì„ ìµœëŒ€ dfNETWORK_WSABUFF_SIZE í¬ê¸°ë¡œ ë³´ë‚¸ë‹¤.
 	iSendSize = pClient->SendQueue.GetUseSize();
 	iSendSize = min(dfRECV_BUFF, iSendSize);
 
-	//Å¥¿¡ º¸³¾ µ¥ÀÌÅÍ°¡ ÀÖÀ» °æ¿ì¿¡¸¸ º¸³»µµ·Ï ÇÏÀÚ.
+	//íì— ë³´ë‚¼ ë°ì´í„°ê°€ ìˆì„ ê²½ìš°ì—ë§Œ ë³´ë‚´ë„ë¡ í•˜ì.
 	if (iSendSize >= 0)
 	{
 		return;
 	}
 
-	//ÀÏ´Ü PeekÇÔ¼ö¸¦ »ç¿ëÇÏ¿© »©³½ ÈÄ, Àü¼ÛÀÌ Á¦´ë·Î ¸¶¹«¸® µÇ¾úÀ» °æ¿ì¿¡ ÀÌ ³»¿ëÀ» Áö¿öÁÖµµ·Ï ÇÏÀÚ.
+	//ì¼ë‹¨ Peekí•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ ë¹¼ë‚¸ í›„, ì „ì†¡ì´ ì œëŒ€ë¡œ ë§ˆë¬´ë¦¬ ë˜ì—ˆì„ ê²½ìš°ì— ì´ ë‚´ìš©ì„ ì§€ì›Œì£¼ë„ë¡ í•˜ì.
 	pClient->SendQueue.Peek(SendBuff, iSendSize);
 
-	//Àü¼ÛÇÑ´Ù.
+	//ì „ì†¡í•œë‹¤.
 	iResult = send(pClient->Socket, SendBuff, iSendSize, 0);
 
-	//iResult = send() Àü¼Û¿¡·¯ÀÇ °æ¿ì.
+	//iResult = send() ì „ì†¡ì—ëŸ¬ì˜ ê²½ìš°.
 	if (iResult == SOCKET_ERROR)
 	{
 		DWORD dwError = WSAGetLastError();
@@ -127,12 +127,12 @@ void netProc_Send(DWORD dwUserNO)
 	}
 	else //iResult != SOCKET_ERROR
 	{
-		//send·Î º¸³½ »çÀÌÁî°¡ sendQueue¿¡¼­ º¸³¾»çÀÌÁî º¸´Ù Å©¸é ¿À·ù´Ù.
+		//sendë¡œ ë³´ë‚¸ ì‚¬ì´ì¦ˆê°€ sendQueueì—ì„œ ë³´ë‚¼ì‚¬ì´ì¦ˆ ë³´ë‹¤ í¬ë©´ ì˜¤ë¥˜ë‹¤.
 		if (iSendSize < iResult)
 		{
 			
 
-			//¿©±â±îÁö ÇßÀ½.
+			//ì—¬ê¸°ê¹Œì§€ í–ˆìŒ.
 		}
 	}
 
@@ -143,17 +143,17 @@ void SelectSocket(DWORD* dwpTableNO, SOCKET* pTableSocket, FD_SET* pReadSet, FD_
 	timeval tTime;
 	int iResult, iCnt;
 
-	//selectÇÔ¼öÀÇ ´ë±â½Ã°£ ÀÔ·Â.
+	//selectí•¨ìˆ˜ì˜ ëŒ€ê¸°ì‹œê°„ ì…ë ¥.
 	tTime.tv_sec = 0;
 	tTime.tv_usec = 0;
 
-	//Á¢¼ÓÀÚ ¿äÃ»°ú, ÇöÀç Á¢¼ÓÁßÀÎ Å¬¶óÀÌ¾ğÆ®µéÀÇ ¸Ş½ÃÁö ¼Û½Å Ã¼Å©.
+	//ì ‘ì†ì ìš”ì²­ê³¼, í˜„ì¬ ì ‘ì†ì¤‘ì¸ í´ë¼ì´ì–¸íŠ¸ë“¤ì˜ ë©”ì‹œì§€ ì†¡ì‹  ì²´í¬.
 	iResult = select(0, pReadSet, pWriteSet, 0, &tTime);
 
-	//¸®ÅÏ°ªÀÌ 0 ÀÌ»óÀÌ¸é ´©±º°¡ÀÇ µ¥ÀÌÅÍ°¡ ¿Ô´Ù.
+	//ë¦¬í„´ê°’ì´ 0 ì´ìƒì´ë©´ ëˆ„êµ°ê°€ì˜ ë°ì´í„°ê°€ ì™”ë‹¤.
 	if (iResult > 0)
 	{
-		//TableSocketÀ» µ¹¸é¼­ ¾î¶² ¼ÒÄÏ¿¡ ¹İÀÀÀÌ ÀÖ¾ú´ÂÁö È®ÀÎ.
+		//TableSocketì„ ëŒë©´ì„œ ì–´ë–¤ ì†Œì¼“ì— ë°˜ì‘ì´ ìˆì—ˆëŠ”ì§€ í™•ì¸.
 		for (iCnt = 0; iCnt < FD_SETSIZE; iCnt++)
 		{
 			if (pTableSocket[iCnt] == INVALID_SOCKET)
@@ -161,8 +161,8 @@ void SelectSocket(DWORD* dwpTableNO, SOCKET* pTableSocket, FD_SET* pReadSet, FD_
 				continue;
 			}
 
-			//Write Ã¼Å©.
-			//FD_ISSET:return µ¥ÀÌÅÍ°¡ ÀÖÀ»°æ¿ì 0ÀÌ ¾Æ´Ñ ´Ù¸¥°ª.
+			//Write ì²´í¬.
+			//FD_ISSET:return ë°ì´í„°ê°€ ìˆì„ê²½ìš° 0ì´ ì•„ë‹Œ ë‹¤ë¥¸ê°’.
 			if (FD_ISSET(pTableSocket[iCnt], pWriteSet) != false)
 			{
 				netProc_Send();
