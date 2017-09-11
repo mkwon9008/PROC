@@ -20,59 +20,59 @@ public :
 	CStreamQueue(int iSize);
 	~CStreamQueue();
 
-	//ÃÊ±âÈ­.
+	//ì´ˆê¸°í™”.
 	void Initial(int iBufferSize = BASE_BUFFER_SIZE);
 
 
-	//ÀüÃ¼ ¹öÆÛ »çÀÌÁî.
+	//ì „ì²´ ë²„í¼ ì‚¬ì´ì¦ˆ.
 	int	GetBufferSize(void);
 
 
-	// ÇöÀç »ç¿ëÁßÀÎ ¿ë·®.
+	// í˜„ì¬ ì‚¬ìš©ì¤‘ì¸ ìš©ëŸ‰.
 	int	GetUseSize(void);
 
 
-	// ÇöÀç ¹öÆÛ¿¡ ³²Àº ¿ë·®. (½ÇÁ¦ »ç¿ëÇÒ ¼ö ÀÖ´Â ¿ë·®)
+	// í˜„ì¬ ë²„í¼ì— ë‚¨ì€ ìš©ëŸ‰. (ì‹¤ì œ ì‚¬ìš©í•  ìˆ˜ ìˆëŠ” ìš©ëŸ‰)
 	int	GetFreeSize(void);
 
 
-	//ÀĞ°í ¾²´Â°úÁ¤¿¡¼­ ¹öÆÛÀÇ ³¡¿¡ µµ´ŞÇÏ±â ±îÁö ¾òÀ» ¼ö ÀÖ´Â ¿ë·®.(²÷±âÁö ¾ÊÀº ±æÀÌ)
+	//ì½ê³  ì“°ëŠ”ê³¼ì •ì—ì„œ ë²„í¼ì˜ ëì— ë„ë‹¬í•˜ê¸° ê¹Œì§€ ì–»ì„ ìˆ˜ ìˆëŠ” ìš©ëŸ‰.(ëŠê¸°ì§€ ì•Šì€ ê¸¸ì´)
 	int	GetSafeReadSize(void);	//int GetNotBrokenGetSize(void);
 	int	GetSafeWriteSize(void); //int GetNotBrokenPutSize(void);
 
 
-	//Rear¸¦ ÅëÇØ µ¥ÀÌÅÍ »ğÀÔ.
-	//return value : ³Ö´Âµ¥ ¼º°øÇÑ »çÀÌÁî.
+	//Rearë¥¼ í†µí•´ ë°ì´í„° ì‚½ì….
+	//return value : ë„£ëŠ”ë° ì„±ê³µí•œ ì‚¬ì´ì¦ˆ.
 	int	Enqueue(char* chpData, int iSize);
 
 
-	//Front ¿¡¼­ µ¥ÀÌÅ¸ °¡Á®¿È. Front ÀÌµ¿.
-	//return value : »©´Âµ¥ ¼º°øÇÑ »çÀÌÁî.
+	//Front ì—ì„œ ë°ì´íƒ€ ê°€ì ¸ì˜´. Front ì´ë™.
+	//return value : ë¹¼ëŠ”ë° ì„±ê³µí•œ ì‚¬ì´ì¦ˆ.
 	int	Dequeue(char* chpDest, int iSize);
 
 
-	//Front ¿¡¼­ µ¥ÀÌÅ¸ ÀĞ¾î¿È. Front °íÁ¤.
-	//return value : ÀĞ¾î¿À´Âµ¥ ¼º°øÇÑ Å©±â.
+	//Front ì—ì„œ ë°ì´íƒ€ ì½ì–´ì˜´. Front ê³ ì •.
+	//return value : ì½ì–´ì˜¤ëŠ”ë° ì„±ê³µí•œ í¬ê¸°.
 	int	Peek(char* chpDest, int iSize);
 
 
-	//¿øÇÏ´Â ±æÀÌ¸¸Å­ Front À§Ä¡ ¿¡¼­ Size¸¸Å­ »èÁ¦.
+	//ì›í•˜ëŠ” ê¸¸ì´ë§Œí¼ Front ìœ„ì¹˜ ì—ì„œ Sizeë§Œí¼ ì‚­ì œ.
 	void RemoveData(int iSize);
 
-	//¿øÇÏ´Â ±æÀÌ¸¸Å­ Front À§Ä¡ ¿¡¼­ Size¸¸Å­ ÀÌµ¿. (À½¼ö°ª ¿Ã ¼ö ¾øÀ½)
-	//return value : ÀÌµ¿ÇÑ Size ¹İÈ¯.
+	//ì›í•˜ëŠ” ê¸¸ì´ë§Œí¼ Front ìœ„ì¹˜ ì—ì„œ Sizeë§Œí¼ ì´ë™. (ìŒìˆ˜ê°’ ì˜¬ ìˆ˜ ì—†ìŒ)
+	//return value : ì´ë™í•œ Size ë°˜í™˜.
 	int	MoveWritePos(int iSize);
 
-	// ¹öÆÛÀÇ ¸ğµç µ¥ÀÌÅÍ »èÁ¦.
+	// ë²„í¼ì˜ ëª¨ë“  ë°ì´í„° ì‚­ì œ.
 	void ClearBuffer(void);
 
-	// ¹öÆÛÀÇ Æ÷ÀÎÅÍ ¾òÀ½.
+	// ë²„í¼ì˜ í¬ì¸í„° ì–»ìŒ.
 	char* GetBufferPtr(void);
 
-	// int Front °¡ Âî¸£°í ÀÖ´Â ¹öÆÛÀÇ Æ÷ÀÎÅÍ¸¦ ¾òÀ½.
+	// int Front ê°€ ì°Œë¥´ê³  ìˆëŠ” ë²„í¼ì˜ í¬ì¸í„°ë¥¼ ì–»ìŒ.
 	char* GetPtrFrontToBuffer(void);	//char* GetReadBufferPtr(void);
 	 
-	//int Rear °¡ Âî¸£°í ÀÖ´Â ¹öÆÛÀÇ Æ÷ÀÎÅÍ¸¦ ¾òÀ½.
+	//int Rear ê°€ ì°Œë¥´ê³  ìˆëŠ” ë²„í¼ì˜ í¬ì¸í„°ë¥¼ ì–»ìŒ.
 	char* GetPtrRearToBuffer(void);		//char* GetWriteBufferPtr(void);
 
 	bool isEmpty(void);
