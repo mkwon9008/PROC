@@ -1,16 +1,16 @@
 #include "ChatServer.hpp"
 
 /*
-#±âº» ÇÁ·ÎÅäÄİ.
+#ê¸°ë³¸ í”„ë¡œí† ì½œ.
 
 (                     HEADER                   )(  CONTENTS )
 | PacketCode | CheckSum | MsgType | PayloadSize | *Payload* |
 	1byte		1byte		2byte		2byte	   SizeByte
 
-CheckSum : °¢ MsgType, PayloadÀÇ °¢ ¹ÙÀÌÆ® ´õÇÏ±â % 256 (PayloadSize ´Â ¹ÌÆ÷ÇÔ) (»ç¿ëÀÚ¿¡ ÀÇÇÑ µ¥ÀÌÅÍ À§.º¯Á¶¸¦ ¸·±âÀ§ÇØ »ç¿ë)
-PayloadÀÇ ¾ÏÈ£È­¿¡ ¼º°øÇß³Ä, º¹È£È­¿¡ ¼º°øÇß³Ä¸¦ CheckSum °ªÀ¸·Î ÆÇ´ÜÇØ¾ß ÇÑ´Ù.
+CheckSum : ê° MsgType, Payloadì˜ ê° ë°”ì´íŠ¸ ë”í•˜ê¸° % 256 (PayloadSize ëŠ” ë¯¸í¬í•¨) (ì‚¬ìš©ìì— ì˜í•œ ë°ì´í„° ìœ„.ë³€ì¡°ë¥¼ ë§‰ê¸°ìœ„í•´ ì‚¬ìš©)
+Payloadì˜ ì•”í˜¸í™”ì— ì„±ê³µí–ˆëƒ, ë³µí˜¸í™”ì— ì„±ê³µí–ˆëƒë¥¼ CheckSum ê°’ìœ¼ë¡œ íŒë‹¨í•´ì•¼ í•œë‹¤.
 
-¹ÙÀÌÆ®(BYTE) : unsigned char
+ë°”ì´íŠ¸(BYTE) : unsigned char
 
 */
 
@@ -28,15 +28,15 @@ int main(int argc, TCHAR* argv[])
 	{
 		NetworkProcess();
 
-		//Æ¯Á¤ Å° ¹× »óÈ²¿¡ µû¸¥ Á¾·áÃ³¸®.
-		if (true)//Ã¼Å©...
+		//íŠ¹ì • í‚¤ ë° ìƒí™©ì— ë”°ë¥¸ ì¢…ë£Œì²˜ë¦¬.
+		if (true)//ì²´í¬...
 		{
 			closesocket(g_ListenSocket);
 			break;
 		}
 	}
 
-	//¼­¹ö ¸¶¹«¸® Á¾·áÀÛ¾÷.
+	//ì„œë²„ ë§ˆë¬´ë¦¬ ì¢…ë£Œì‘ì—….
 	return 0;
 
 	WSADATA wsaData;
@@ -55,17 +55,17 @@ int main(int argc, TCHAR* argv[])
 		ErrHandling("WSAStartup() Err.");
 	printf("WSAStartup() OK.\n");
 
-	//1. listen() ¼ÒÄÏ »ı¼º.
+	//1. listen() ì†Œì¼“ ìƒì„±.
 	//Declaration ServSock
 	hServSock = socket(PF_INET, SOCK_STREAM, 0);
 	
-	//¼­¹ö¼ÒÄÏ ÇÒ´ç ¿¡·¯Ã¼Å©.
+	//ì„œë²„ì†Œì¼“ í• ë‹¹ ì—ëŸ¬ì²´í¬.
 	if (hServSock == INVALID_SOCKET)
 		ErrHandling("socket() Error");
 	printf("socket() OK.\n");
 
-	//2. ±¸Á¶Ã¼ »ı¼º.
-	//ZeroMemory·Î servAddr¹Ğ°í, ÀÎÀÚ ÇÒ´ç.
+	//2. êµ¬ì¡°ì²´ ìƒì„±.
+	//ZeroMemoryë¡œ servAddrë°€ê³ , ì¸ì í• ë‹¹.
 	memset(&servAdr, 0, sizeof(servAdr));
 	servAdr.sin_family = AF_INET;
 	servAdr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -73,21 +73,21 @@ int main(int argc, TCHAR* argv[])
 	printf("SETservAddr OK.\n");
 
 
-	//3. listen¼ÒÄÏ¿¡ ±¸Á¶Ã¼ Àû¿ëÇØ¼­ bind();
+	//3. listenì†Œì¼“ì— êµ¬ì¡°ì²´ ì ìš©í•´ì„œ bind();
 	if (bind(hServSock, (SOCKADDR*)&servAdr, sizeof(servAdr)) == SOCKET_ERROR)
 		ErrHandling("bind() Err.");
 	printf("bind() OK.\n");
 
 
-	//4. binding ÀÌ ¿Ï·á µÈ hServSock À¸·Î listen() ½ÃÀÛ.
-	//listen(¼ÒÄÏµğ½ºÅ©¸³ÅÍ, ´ë±â ¸Ş½ÃÁö Å¥ÀÇ °¹¼ö);
+	//4. binding ì´ ì™„ë£Œ ëœ hServSock ìœ¼ë¡œ listen() ì‹œì‘.
+	//listen(ì†Œì¼“ë””ìŠ¤í¬ë¦½í„°, ëŒ€ê¸° ë©”ì‹œì§€ íì˜ ê°¯ìˆ˜);
 	if (listen(hServSock, 10) == SOCKET_ERROR)
 		ErrHandling("listen() Err.");
 	printf("listen() OK\n");
 
-	//readset ÃÊ±âÈ­.
+	//readset ì´ˆê¸°í™”.
 	FD_ZERO(&reads);
-	//ÆÄÀÏµğ½ºÅ©¸³ÅÍ¿¡ readset Ãß°¡.
+	//íŒŒì¼ë””ìŠ¤í¬ë¦½í„°ì— readset ì¶”ê°€.
 	FD_SET(hServSock, &reads);
 
 	while (true)
