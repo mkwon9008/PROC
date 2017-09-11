@@ -42,13 +42,13 @@ typedef struct st_CHAT_ROOM
 	std::list<DWORD> UserList;
 }CHATROOM;
 
-extern std::map<DWORD, st_CLIENT*>		g_ClientMap;	//Å¬¶ó °ü¸®¿ë ¸Ê.
-extern std::map<DWORD, st_CHAT_ROOM*>	g_RoomMap;		//¹æ °ü¸®¿ë ¸Ê.
+extern std::map<DWORD, st_CLIENT*>		g_ClientMap;	//í´ë¼ ê´€ë¦¬ìš© ë§µ.
+extern std::map<DWORD, st_CHAT_ROOM*>	g_RoomMap;		//ë°© ê´€ë¦¬ìš© ë§µ.
 
 extern SOCKET g_ListenSocket;
 
-/* ½ÇÁ¦ ¼­ºñ½º ½Ã ÀÌ·¸°Ô »ç¿ëÇÏ¸é Àı´ë ¾ÈµÊ. */
-//À¯Àú °íÀ¯Å°, ¹æ °íÀ¯ Å°¸¦ ¸¸µé Àü¿ª º¯¼ö, ÇÒ´ç ½Ã ¸¶´Ù +1 ÇØ¼­ »ç¿ë.
+/* ì‹¤ì œ ì„œë¹„ìŠ¤ ì‹œ ì´ë ‡ê²Œ ì‚¬ìš©í•˜ë©´ ì ˆëŒ€ ì•ˆë¨. */
+//ìœ ì € ê³ ìœ í‚¤, ë°© ê³ ìœ  í‚¤ë¥¼ ë§Œë“¤ ì „ì—­ ë³€ìˆ˜, í• ë‹¹ ì‹œ ë§ˆë‹¤ +1 í•´ì„œ ì‚¬ìš©.
 extern DWORD g_dwKey_UserNO;
 extern DWORD g_dwKey_RoomNO;
 /*********************************************/
