@@ -4,7 +4,7 @@ CRingBuffer::CRingBuffer(int i32BufferSize)
 	: _ui32BufferSize(i32BufferSize), _ui32UseSize(0),
 	_chpBuffer(nullptr), _chpWritePtr(nullptr), _chpReadPtr(nullptr), _chpBufferEnd(nullptr)
 {
-	//Å¬·¡½º »ı¼ºÀÚ.
+	//í´ë˜ìŠ¤ ìƒì„±ì.
 	if (init(i32BufferSize - 1) == true)
 	{
 		//RingBuffer initialize fail.
@@ -18,7 +18,7 @@ CRingBuffer::~CRingBuffer()
 	_chpBuffer = nullptr;
 }
 
-//ÃÊ±âÈ­ ÇÔ¼ö. (Param : ¹öÆÛ»çÀÌÁîÀÇ -1 °ªÀ» ³Ö¾î¼­ ÇØ´ç ¹öÆÛÀÇ ³¡À» °¡¸®Å°°Ô ÇÏ´Â const BufferEnd¼ÂÆÃ.)
+//ì´ˆê¸°í™” í•¨ìˆ˜. (Param : ë²„í¼ì‚¬ì´ì¦ˆì˜ -1 ê°’ì„ ë„£ì–´ì„œ í•´ë‹¹ ë²„í¼ì˜ ëì„ ê°€ë¦¬í‚¤ê²Œ í•˜ëŠ” const BufferEndì…‹íŒ….)
 bool CRingBuffer::init(const int i32BufferEnd)
 {
 	_chpBuffer		= new char[CRingBuffer::GetBufferSize()];
@@ -34,37 +34,37 @@ bool CRingBuffer::init(const int i32BufferEnd)
 }
 
 /*GET****************************************************************************************/
-// ¹öÆÛÀÇ ÃÑ »çÀÌÁî ¾ò±â.
+// ë²„í¼ì˜ ì´ ì‚¬ì´ì¦ˆ ì–»ê¸°.
 int	CRingBuffer::GetBufferSize(void)
 {
 	return _ui32BufferSize;
 }
 
-// ÇöÀç »ç¿ëÁßÀÎ ¿ë·® ¾ò±â.
+// í˜„ì¬ ì‚¬ìš©ì¤‘ì¸ ìš©ëŸ‰ ì–»ê¸°.
 int	CRingBuffer::GetUseSize(void)
 {
 	return _ui32UseSize;
 }
 
-// ÇöÀç ¹öÆÛ¿¡ ³²Àº ¿ë·® ¾ò±â.
+// í˜„ì¬ ë²„í¼ì— ë‚¨ì€ ìš©ëŸ‰ ì–»ê¸°.
 int	CRingBuffer::GetFreeSize(void)
 {
 	return (_ui32BufferSize) - (_ui32UseSize);
 }
 
-// ¹öÆÛÀÇ RearºÎºĞ. ¾²´Â ºÎºĞÀÇ Æ÷ÀÎÅÍ.
+// ë²„í¼ì˜ Rearë¶€ë¶„. ì“°ëŠ” ë¶€ë¶„ì˜ í¬ì¸í„°.
 char* CRingBuffer::GetWriteBufferPtr(void)
 {
 	return _chpWritePtr;
 }
 
-// ¹öÆÛÀÇ FrontºÎºĞ. ÀĞ´Â ºÎºĞÀÇ Æ÷ÀÎÅÍ.
+// ë²„í¼ì˜ Frontë¶€ë¶„. ì½ëŠ” ë¶€ë¶„ì˜ í¬ì¸í„°.
 char* CRingBuffer::GetReadBufferPtr(void)
 {
 	return _chpReadPtr;
 }
 
-// ¹öÆÛ Æ÷ÀÎÅÍ·Î ¿ÜºÎ¿¡¼­ ÇÑ¹æ¿¡ ¾µ ¼ö ÀÖ´Â ±æÀÌ.
+// ë²„í¼ í¬ì¸í„°ë¡œ ì™¸ë¶€ì—ì„œ í•œë°©ì— ì“¸ ìˆ˜ ìˆëŠ” ê¸¸ì´.
 int	CRingBuffer::GetNotBrokenWriteSize(void)
 {
 	char* chpTempWritePtr = GetWriteBufferPtr();
@@ -86,7 +86,7 @@ int	CRingBuffer::GetNotBrokenWriteSize(void)
 	return i32AbleWriteSize;
 }
 
-// ¹öÆÛ Æ÷ÀÎÅÍ·Î ¿ÜºÎ¿¡¼­ ÇÑ¹æ¿¡ ÀĞÀ» ¼ö ÀÖ´Â ±æÀÌ.
+// ë²„í¼ í¬ì¸í„°ë¡œ ì™¸ë¶€ì—ì„œ í•œë°©ì— ì½ì„ ìˆ˜ ìˆëŠ” ê¸¸ì´.
 int	CRingBuffer::GetNotBrokenReadSize(void)
 {
 	char* chpTempReadPtr = GetReadBufferPtr();
@@ -108,7 +108,7 @@ int	CRingBuffer::GetNotBrokenReadSize(void)
 	return i32AbleReadSize;
 }
 
-// ¹öÆÛÀÇ Ã¹ ½ÃÀÛºÎºĞ Æ÷ÀÎÅÍ.
+// ë²„í¼ì˜ ì²« ì‹œì‘ë¶€ë¶„ í¬ì¸í„°.
 char* CRingBuffer::GetBufferBeginPtr(void)
 {
 	return _chpBuffer;
@@ -118,49 +118,49 @@ char* CRingBuffer::GetBufferBeginPtr(void)
 
 
 /*Funtion************************************************************************************/
-// WritePos ¿¡ µ¥ÀÌÅ¸ ³ÖÀ½.
-//chpData:³ÖÀ¸·Á´Â µ¥ÀÌÅÍ, i32Size : ³ÖÀ¸·Á´Â µ¥ÀÌÅÍÀÇ ¼ö, return : ³Ö±â¼º°øÇÑ ¼ö.
+// WritePos ì— ë°ì´íƒ€ ë„£ìŒ.
+//chpData:ë„£ìœ¼ë ¤ëŠ” ë°ì´í„°, i32Size : ë„£ìœ¼ë ¤ëŠ” ë°ì´í„°ì˜ ìˆ˜, return : ë„£ê¸°ì„±ê³µí•œ ìˆ˜.
 int CRingBuffer::Enqueue(char* chpData, int i32Size)
 {
 	int i32AbleWriteSize = GetNotBrokenWriteSize();
 	int i32FreeSize = GetFreeSize();
 
-	//1. ³ÖÀ¸·Á´Â »çÀÌÁî > »ç¿ë°¡´ÉÇÑ »çÀÌÁî. (°¡´ÉÇÑµ¥±îÁö¸¸ ³Ö´Â´Ù.)
+	//1. ë„£ìœ¼ë ¤ëŠ” ì‚¬ì´ì¦ˆ > ì‚¬ìš©ê°€ëŠ¥í•œ ì‚¬ì´ì¦ˆ. (ê°€ëŠ¥í•œë°ê¹Œì§€ë§Œ ë„£ëŠ”ë‹¤.)
 	if (i32Size > i32FreeSize)
 	{
 		i32Size = i32FreeSize;
 	}
 	
-	//2. ²÷±â´Â ºÎºĞÀÌ ÀÖ´Ù.
+	//2. ëŠê¸°ëŠ” ë¶€ë¶„ì´ ìˆë‹¤.
 	if (i32Size > i32AbleWriteSize)
 	{
-		//RemainSize(²÷±â´Âµ¥±îÁö ³Ö°í ³²´Â¿ë·®) = Size(³ÖÀ¸·Á´Â¿ë·®) - AbleWriteSize(²÷±â´Âµ¥±îÁö ¿ë·®);
+		//RemainSize(ëŠê¸°ëŠ”ë°ê¹Œì§€ ë„£ê³  ë‚¨ëŠ”ìš©ëŸ‰) = Size(ë„£ìœ¼ë ¤ëŠ”ìš©ëŸ‰) - AbleWriteSize(ëŠê¸°ëŠ”ë°ê¹Œì§€ ìš©ëŸ‰);
 		int i32RemainSize = i32Size - i32AbleWriteSize;
 
-		//memcpy¸¦ µÎ¹ø ÇØ¾ßÇÔ. ÀÏ´Ü ²÷±â´Âµ¥±îÁö ³ÖÀ½. (WritePosºÎÅÍ ¹öÆÛÀÇ ²÷±â´ÂºÎºĞ±îÁö)
+		//memcpyë¥¼ ë‘ë²ˆ í•´ì•¼í•¨. ì¼ë‹¨ ëŠê¸°ëŠ”ë°ê¹Œì§€ ë„£ìŒ. (WritePosë¶€í„° ë²„í¼ì˜ ëŠê¸°ëŠ”ë¶€ë¶„ê¹Œì§€)
 		memcpy_s(GetWriteBufferPtr(), i32AbleWriteSize, chpData, i32AbleWriteSize);
 		
-		//µÎ¹øÂ° memcpy. ²÷±â°í ³²´Â »çÀÌÁî¸¸Å­ ³ÖÀ½. (¹öÆÛÀÇ Ã¹ºÎºĞ ºÎÅÍ ³²´Â »çÀÌÁî±îÁö)
+		//ë‘ë²ˆì§¸ memcpy. ëŠê¸°ê³  ë‚¨ëŠ” ì‚¬ì´ì¦ˆë§Œí¼ ë„£ìŒ. (ë²„í¼ì˜ ì²«ë¶€ë¶„ ë¶€í„° ë‚¨ëŠ” ì‚¬ì´ì¦ˆê¹Œì§€)
 		memcpy_s(GetBufferBeginPtr(), i32RemainSize, chpData + i32AbleWriteSize, i32RemainSize);
 
-		//WritePosÀÌµ¿. (¹öÆÛÀÇ Ã¹ºÎºĞ¿¡¼­ ReaminSize¸¸Å­)
+		//WritePosì´ë™. (ë²„í¼ì˜ ì²«ë¶€ë¶„ì—ì„œ ReaminSizeë§Œí¼)
 		MoveWritePos(i32RemainSize, true);
 
-		//»ç¿ëÁßÀÎ ¿ë·® °è»ê.
+		//ì‚¬ìš©ì¤‘ì¸ ìš©ëŸ‰ ê³„ì‚°.
 		_ui32UseSize += i32Size;
 
-		//³ÖÀº°ª ¸®ÅÏ.
+		//ë„£ì€ê°’ ë¦¬í„´.
 		return i32Size;
 	}
 	
-	//3. ²÷±â´Â ºÎºĞÀÌ ¾ø´Ù.
+	//3. ëŠê¸°ëŠ” ë¶€ë¶„ì´ ì—†ë‹¤.
 	memcpy_s(GetWriteBufferPtr(), i32Size, chpData, i32Size);
 	MoveWritePos(i32Size);
 	_ui32UseSize += i32Size;
 	return i32Size;
 }
 
-// ReadPos ¿¡¼­ µ¥ÀÌÅ¸ °¡Á®¿È. ReadPos ÀÌµ¿.
+// ReadPos ì—ì„œ ë°ì´íƒ€ ê°€ì ¸ì˜´. ReadPos ì´ë™.
 int CRingBuffer::Dequeue(char* chpDest, int i32Size)
 {
 	int i32UseSize = GetUseSize();
@@ -189,19 +189,19 @@ int CRingBuffer::Dequeue(char* chpDest, int i32Size)
 	return i32Size;
 }
 
-// ReadPos ¿¡¼­ µ¥ÀÌÅ¸ ÀĞ¾î¿È. ReadPos °íÁ¤.
+// ReadPos ì—ì„œ ë°ì´íƒ€ ì½ì–´ì˜´. ReadPos ê³ ì •.
 int CRingBuffer::Peek(char* chpDest, int i32Size)
 {
 	int i32UseSize = GetUseSize();
 	int i32AbleReadSize = GetNotBrokenReadSize();
 
-	//0. ³²Àº ¿ë·®º¸´Ù ¸¹Àº°É »Ì´Â´Ù.
+	//0. ë‚¨ì€ ìš©ëŸ‰ë³´ë‹¤ ë§ì€ê±¸ ë½‘ëŠ”ë‹¤.
 	if (i32Size > i32UseSize)
 	{
 		i32Size = i32UseSize;
 	}
 
-	//1. Â©¸°´Ù.
+	//1. ì§¤ë¦°ë‹¤.
 	if (i32Size > i32AbleReadSize)
 	{
 		int i32RemainSize = i32Size - i32AbleReadSize;
@@ -209,7 +209,7 @@ int CRingBuffer::Peek(char* chpDest, int i32Size)
 		memcpy_s(chpDest + i32AbleReadSize, i32RemainSize, GetBufferBeginPtr(), i32RemainSize);
 		return i32Size;
 	}
-	//2. ¾ÈÂ©¸°´Ù.
+	//2. ì•ˆì§¤ë¦°ë‹¤.
 	memcpy_s(chpDest, i32Size, GetReadBufferPtr(), i32Size);
 	return i32Size;
 }
@@ -217,7 +217,7 @@ int CRingBuffer::Peek(char* chpDest, int i32Size)
 
 
 /*Utility************************************************************************************/
-// ¹öÆÛ°¡ ºñ¾ú´ÂÁö °Ë»ç.
+// ë²„í¼ê°€ ë¹„ì—ˆëŠ”ì§€ ê²€ì‚¬.
 bool CRingBuffer::IsEmpty(void)
 {
 	if (GetWriteBufferPtr() == GetReadBufferPtr())
@@ -227,39 +227,39 @@ bool CRingBuffer::IsEmpty(void)
 	return false;
 }
 
-// ¹öÆÛ°¡ °¡µæ Ã¡´ÂÁö °Ë»ç.
+// ë²„í¼ê°€ ê°€ë“ ì°¼ëŠ”ì§€ ê²€ì‚¬.
 bool CRingBuffer::IsFull(void)
 {
 	char* chpTempWritePtr	= GetWriteBufferPtr();
 	char* chpTempReadPtr	= GetReadBufferPtr();
 
-	//¸¸¾à WritePtrÀÌ BufferEndºÎºĞÀ» °¡¸®Å°°í ÀÖ¾ú´Ù¸é? WritePos + 1À» ÇØ¼± ¾ÈµÊ.
+	//ë§Œì•½ WritePtrì´ BufferEndë¶€ë¶„ì„ ê°€ë¦¬í‚¤ê³  ìˆì—ˆë‹¤ë©´? WritePos + 1ì„ í•´ì„  ì•ˆë¨.
 	if (chpTempWritePtr == _chpBufferEnd)
 	{
-		//³í¸®ÀûÀ¸·Î +1 Ä­ÀÎ ¹öÆÛÀÇ Ã¹ºÎºĞÀÌ ReadPtr°ú °°ÀºÁö È®ÀÎ.
+		//ë…¼ë¦¬ì ìœ¼ë¡œ +1 ì¹¸ì¸ ë²„í¼ì˜ ì²«ë¶€ë¶„ì´ ReadPtrê³¼ ê°™ì€ì§€ í™•ì¸.
 		if (chpTempReadPtr == _chpBuffer)
 		{
-			//°°´Ù¸é Full.
+			//ê°™ë‹¤ë©´ Full.
 			return true;
 		}
 		else
 		{
-			//¾Æ´Ï¸é not full.
+			//ì•„ë‹ˆë©´ not full.
 			return false;
 		}
 	}
 
-	//ÀÏ¹İÀûÀÎ Á¶°Ç. '¾²±âÆ÷ÀÎÅÍ + 1 == ÀĞ±âÆ÷ÀÎÅÍ' Á¶°Ç¼º¸³½Ã full.
+	//ì¼ë°˜ì ì¸ ì¡°ê±´. 'ì“°ê¸°í¬ì¸í„° + 1 == ì½ê¸°í¬ì¸í„°' ì¡°ê±´ì„±ë¦½ì‹œ full.
 	if ( (chpTempReadPtr) == (chpTempWritePtr + 1) )
 	{
-		//²ËÂü.
+		//ê½‰ì°¸.
 		return true;
 	}
-	//²Ë¾ÈÂü.
+	//ê½‰ì•ˆì°¸.
 	return false;
 }
 
-// WritePtr ÀÌµ¿. (EnqueueÇÒ ¶§ »ç¿ë).
+// WritePtr ì´ë™. (Enqueueí•  ë•Œ ì‚¬ìš©).
 int CRingBuffer::MoveWritePos(int i32Size, bool bBeginFlag)
 {
 	if (bBeginFlag == true)
@@ -280,7 +280,7 @@ int CRingBuffer::MoveWritePos(int i32Size, bool bBeginFlag)
 	return i32Size;*/
 }
 
-// ReadPtr ÀÌµ¿. (µ¥ÀÌÅÍ »èÁ¦¿Í µ¿ÀÏ).
+// ReadPtr ì´ë™. (ë°ì´í„° ì‚­ì œì™€ ë™ì¼).
 int	CRingBuffer::MoveReadPos(int i32Size, bool bBeginFlag)
 {
 	if (bBeginFlag == true)
@@ -302,7 +302,7 @@ int	CRingBuffer::MoveReadPos(int i32Size, bool bBeginFlag)
 }
 
 
-// ¹öÆÛÀÇ ¸ğµç µ¥ÀÌÅÍ »èÁ¦. (½ÇÁ¦·Î »èÁ¦ÇÒ ÇÊ¿ä¾øÀÌ, WritePos, ReadPos¸¸ ÃÊ±â°ªÀ¸·Î ¸®¼ÂÆÃÇÏ¸éµÊ)
+// ë²„í¼ì˜ ëª¨ë“  ë°ì´í„° ì‚­ì œ. (ì‹¤ì œë¡œ ì‚­ì œí•  í•„ìš”ì—†ì´, WritePos, ReadPosë§Œ ì´ˆê¸°ê°’ìœ¼ë¡œ ë¦¬ì…‹íŒ…í•˜ë©´ë¨)
 void CRingBuffer::ClearBuffer(void)
 {
 	_chpWritePtr	= _chpBuffer;
